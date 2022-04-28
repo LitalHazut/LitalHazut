@@ -1,4 +1,7 @@
 from datetime import datetime
+from itertools import count
+
+from sqlalchemy import desc
 from core.models import ShortUrls
 from core import app, db
 from random import choice
@@ -16,7 +19,7 @@ def generate_short_id(num_of_chars: int):
 
 def shorten_url(url: string, short_id: string):
     if is_valid_args(url, short_id):
-        if is_shorten_url_not_exists(url, short_id): 
+        if is_shorten_url_not_exists(url, short_id):
             return insert_shortern_url_to_db(url, short_id)
     else:
         return redirect(url_for('index'))
@@ -34,6 +37,7 @@ def is_valid_args(url: string, short_id: string):
 
 def is_shorten_url_not_exists(url: string, short_id: string):
     return ShortUrls.query.filter_by(short_id=short_id, original_url=url).first() is None
+
 
 def insert_shortern_url_to_db(url: string, short_id: string):
     if not short_id:
@@ -54,7 +58,7 @@ def increase_counter(link):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':      
+    if request.method == 'POST':
         return shorten_url(request.form['url'], request.form['custom_id'])
     return render_template('index.html')
 
@@ -86,6 +90,8 @@ def set_interval(func, sec):
     return t
 
 
-# def update_cache():
-
-# set_interval(update_cache, 600)
+def update_cache():
+    topTenSitesCache = ShortUrls.query.order_by(ShortUrls.counter.desc()).limit(10).all()
+    for row in topTenSitesCache:
+        print(row.counter,row.original_url)
+set_interval(update_cache, 10)
