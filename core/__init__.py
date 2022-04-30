@@ -1,4 +1,3 @@
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -10,4 +9,5 @@ app.config.from_object(config("APP_SETTINGS"))
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+SHOW_LOGS=True
 from core import routes
