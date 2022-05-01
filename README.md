@@ -3,6 +3,6 @@
 
 
 ##### Input URL and input custom id:
-![image of Shorty site](shorty.png)
+![image of Shorty site](Shorty.png)
 
 
