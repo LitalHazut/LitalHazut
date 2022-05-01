@@ -3,8 +3,10 @@ from core import app
 from flask import render_template, request, flash, redirect, url_for
 from core.utils import shorten_url, trigger_increase_counter
 from core.cache_service import top_ten_sites_cache, start_cache
+from core.counter_service import start_counter_service
 
 start_cache()
+start_counter_service()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -16,10 +18,10 @@ def index():
 
 @app.route('/<short_id>')
 def redirect_url(short_id):
-    url_data=None
+    url_data = None
     for data in top_ten_sites_cache:
         if data.short_id == short_id:
-            url_data=data
+            url_data = data
     if url_data:
         trigger_increase_counter(url_data)
         return redirect(url_data.original_url)
