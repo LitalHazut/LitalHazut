@@ -3,6 +3,6 @@
 
 
 ### Input URL and input custom id:
-![image of Shorty site](C:\Users\lital\Desktop\flask\shorty.png)
+[![image of Shorty site](/flask/shorty.png)]
 
 
