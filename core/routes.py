@@ -1,13 +1,12 @@
 from core.models import ShortUrls
 from core import app
 from flask import render_template, request, flash, redirect, url_for
-from core.utils import shorten_url, trigger_increase_counter
+from core.business_logic import shorten_url
 from core.cache_service import top_ten_sites_cache, start_cache
-from core.counter_service import start_counter_service
+from core.counter_service import start_counter_service,trigger_increase_counter
 
 start_cache()
 start_counter_service()
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
