@@ -33,3 +33,6 @@ def insert_shortern_url_to_db(url: string, short_id: string):
     db.session.commit()
     short_url = request.host_url + short_id
     return render_template('index.html', short_url=short_url)
+
+def get_link_by_short_id(short_id:string):
+    ShortUrls.query.filter_by(short_id=short_id).first()

@@ -1,7 +1,7 @@
 from core.models import ShortUrls
 from core import app
 from flask import render_template, request, flash, redirect, url_for
-from core.business_logic import shorten_url
+from core.business_logic import shorten_url, get_link_by_short_id
 from core.cache_service import top_ten_sites_cache, start_cache
 from core.counter_service import start_counter_service,trigger_increase_counter
 
@@ -25,7 +25,7 @@ def redirect_url(short_id):
         trigger_increase_counter(url_data)
         return redirect(url_data.original_url)
     else:
-        link = ShortUrls.query.filter_by(short_id=short_id).first()
+        link = get_link_by_short_id(short_id)
         if link:
             trigger_increase_counter(link)
             return redirect(link.original_url)

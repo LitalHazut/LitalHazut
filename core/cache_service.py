@@ -10,7 +10,7 @@ def update_cache():
     if(SHOW_LOGS):
         print('Update cache')
         for row in topTenSitesCache:
-            print(row.counter,row.original_url)      
+            print(row.counter,row.short_id)      
 
 def start_cache():  
     set_interval(update_cache, interval_timeout)
